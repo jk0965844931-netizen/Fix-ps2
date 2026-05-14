@@ -1,6 +1,19 @@
 # Fix-ps2
 
-Utilities and documented defaults for making the iPSX2/PCSX2 iOS port feel smoother, reduce avoidable frame drops, and recover safely from bad settings.
+Utilities, build scaffolding, and documented defaults for making the iPSX2/PCSX2 iOS port feel smoother, reduce avoidable frame drops, and recover safely from bad settings.
+
+## Unsigned IPA build scaffold
+
+The GitHub Actions workflow used by the upstream iPSX2 project runs CMake from `cpp/`. This repository now includes a minimal CMake/iOS target in that directory so the workflow can start, configure an Xcode project, archive an unsigned `iPSX2.app`, and package an `.ipa` instead of failing before the first build command because `cpp/` is missing.
+
+The scaffold is intentionally small: it is an iOS shell that displays the compiled-in performance recommendations and keeps the IPA pipeline healthy while the full upstream PCSX2/iPSX2 engine sources are absent from this repository.
+
+Local CMake sanity check on non-Apple hosts:
+
+```bash
+cmake -S cpp -B /tmp/ipsx2-cmake-check -G "Unix Makefiles"
+cmake --build /tmp/ipsx2-cmake-check
+```
 
 ## FPS / smoothness optimizer
 
